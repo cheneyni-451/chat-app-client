@@ -1,0 +1,11 @@
+<section class="message-container">
+  <ul class="messages">
+    @for (message of messages(); track $index) {
+    <li>{{ message.content }}</li>
+    }
+  </ul>
+  <form class="message-form" [formGroup]="messageForm" (submit)="sendMessage()">
+    <input type="text" name="" id="message-input" />
+    <button type="submit">Send</button>
+  </form>
+</section>
