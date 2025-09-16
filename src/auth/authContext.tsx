@@ -37,6 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw new Error(res.statusText);
     }
     const userDetails: User = await res.json();
+    login({ ...userDetails, token });
   }
 
   useEffect(() => {
