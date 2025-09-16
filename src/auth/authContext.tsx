@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import type { User } from "../models/user.models";
+import type { User } from "../models/userModels";
 
 type UserDetails = Omit<User, "token">;
 
