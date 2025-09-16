@@ -1,4 +1,4 @@
-import type { User } from "../models/user.models";
+import type { User } from "../models/userModels";
 
 const API_ENDPOINT = import.meta.env.VITE_BACKEND_ENDPOINT;
 const USER_API_ENDPOINT = `${API_ENDPOINT}/user`;
