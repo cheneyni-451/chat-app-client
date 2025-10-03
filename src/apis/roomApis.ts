@@ -1,7 +1,7 @@
 import type { MessageDetail } from "../models/messageModels";
 import type { Room, RoomWithMemberCount } from "../models/roomModels";
 
-type MessageInput = {
+export type MessageInput = {
   roomId: number;
   userId: number;
   content: string;
@@ -68,7 +68,10 @@ export async function createMessage(
   const res = await fetch(`${import.meta.env.VITE_BACKEND_ENDPOINT}/messages`, {
     method: "POST",
     body: JSON.stringify(messageInput),
-    headers: { Authorization: `Bearer ${authToken}` },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`,
+    },
   });
 
   if (res.ok) {

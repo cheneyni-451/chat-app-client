@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { login } from "./apis/userApis";
 import { useAuth } from "./auth/useAuth";
+import { Button, Grid, Paper, TextField } from "@mui/material";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -24,24 +25,39 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
+    <Grid
+      container
+      justifyContent={"center"}
+      alignItems={"center"}
+      sx={{ height: "100%" }}
+    >
       <form onSubmit={handleLoginFormSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Log In</button>
+        <Grid container spacing={2} direction={"column"}>
+          <Grid>
+            <TextField
+              type="email"
+              label="email"
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Grid>
+          <Grid>
+            <TextField
+              type="password"
+              label="password"
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Grid>
+          <Grid>
+            <Button type="submit" variant="contained" color="primary">
+              Log In
+            </Button>
+          </Grid>
+        </Grid>
       </form>
-    </div>
+    </Grid>
   );
 }

@@ -5,6 +5,7 @@ import RoomList from "./RoomList";
 import type { Room } from "./models/roomModels";
 import { getRooms } from "./apis/roomApis";
 import Chat from "./Chat";
+import { socket } from "./main";
 
 export default function Home() {
   const auth = useAuth();
@@ -16,7 +17,11 @@ export default function Home() {
   }, []);
 
   function handleSelectRoom(room: Room) {
+    if (selectedRoom) {
+      socket.emit("leave room", selectedRoom.id);
+    }
     setSelectedRoom(room);
+    socket.emit("join room", room.id);
   }
 
   return (
