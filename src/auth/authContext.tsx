@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   function login(data: User) {
-    setUser({ id: data.id, name: data.name, email: data.name });
+    setUser({ id: data.id, name: data.name, email: data.email });
     setToken(data.token);
     localStorage.setItem("token", data.token);
   }
