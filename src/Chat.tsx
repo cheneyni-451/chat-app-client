@@ -1,5 +1,5 @@
 import "./styles/Chat.css";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { Room } from "./models/roomModels";
 import type { MessageDetail } from "./models/messageModels";
 import {
@@ -9,17 +9,13 @@ import {
 } from "./apis/roomApis";
 import { useAuth } from "./auth/useAuth";
 import { socket } from "./main";
+import { Grid, Stack, TextField } from "@mui/material";
 
 export default function Chat({ room }: { room: Room }) {
   const auth = useAuth();
   const [messages, setMessages] = useState<MessageDetail[]>([]);
   const [messageInput, setMessageInput] = useState<string>("");
-
-  useEffect(() => {
-    getMessagesForRoom(auth.getToken()!, room.id)
-      .then(setMessages)
-      .catch(console.error);
-  }, [room]);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     socket.on(
@@ -33,6 +29,18 @@ export default function Chat({ room }: { room: Room }) {
     );
   }, []);
 
+  useEffect(() => {
+    getMessagesForRoom(auth.getToken()!, room.id)
+      .then(setMessages)
+      .catch(console.error);
+  }, [room]);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [messages]);
+
   function handleSendMessage(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const messagePayload: MessageInput = {
@@ -44,35 +52,49 @@ export default function Chat({ room }: { room: Room }) {
       .then((data) => {
         if (data) {
           setMessages([...messages, data]);
+          setMessageInput("");
         }
       })
       .catch(console.error);
   }
 
   return (
-    <div className="container">
-      <ul className="message-list">
+    <Stack spacing={1} sx={{ height: "100%" }}>
+      <Grid
+        container
+        direction="column"
+        wrap="nowrap"
+        sx={{ overflowY: "scroll", height: "100%" }}
+      >
         {messages.map((msg) => {
           const isUserMessage = msg.user.id === auth.user?.id;
           return (
-            <li
-              className={"message " + (isUserMessage ? "user-message" : "")}
+            <Grid
+              alignSelf={isUserMessage ? "flex-end" : "flex-start"}
+              className={"message"}
+              sx={{
+                color: "#313244",
+                border: "none",
+                backgroundColor: isUserMessage ? "#89b4fa" : "#b4befe",
+                marginY: isUserMessage ? "0" : "0.2rem",
+              }}
               key={msg.id}
             >
               {msg.content}
-            </li>
+            </Grid>
           );
         })}
-      </ul>
+        <div ref={bottomRef} />
+      </Grid>
       <form className="message-form" onSubmit={(e) => handleSendMessage(e)}>
-        <input
-          type="text"
-          name="message-content"
+        <TextField
+          multiline
+          variant="outlined"
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
         />
         <button type="submit">Send</button>
       </form>
-    </div>
+    </Stack>
   );
 }

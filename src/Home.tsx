@@ -6,6 +6,7 @@ import type { Room } from "./models/roomModels";
 import { getRooms } from "./apis/roomApis";
 import Chat from "./Chat";
 import { socket } from "./main";
+import { Grid } from "@mui/material";
 
 export default function Home() {
   const auth = useAuth();
@@ -25,11 +26,13 @@ export default function Home() {
   }
 
   return (
-    <div className="container">
-      <div className="rooms">
+    <Grid container sx={{ maxHeight: "100%", height: "100%" }}>
+      <Grid size={2} justifyContent={"start"} sx={{ height: "100%" }}>
         <RoomList rooms={rooms} selectRoom={handleSelectRoom} />
-      </div>
-      <div className="chat">{selectedRoom && <Chat room={selectedRoom} />}</div>
-    </div>
+      </Grid>
+      <Grid size={10} sx={{ height: "100%" }}>
+        {selectedRoom && <Chat room={selectedRoom} />}
+      </Grid>
+    </Grid>
   );
 }
