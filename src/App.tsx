@@ -19,7 +19,6 @@ function App() {
         sx={{
           height: "100%",
           width: "100%",
-          backgroundColor: "#1e1e2e",
         }}
       >
         {auth.user ? <Home /> : <LoginPage />}

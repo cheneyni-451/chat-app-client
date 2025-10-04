@@ -31,7 +31,13 @@ export default function LoginPage() {
       alignItems={"center"}
       sx={{ height: "100%" }}
     >
-      <form onSubmit={handleLoginFormSubmit}>
+      <form
+        onSubmit={handleLoginFormSubmit}
+        style={{
+          padding: "5rem",
+          backgroundColor: "#1e1e2e",
+        }}
+      >
         <Grid container spacing={2} direction={"column"}>
           <Grid>
             <TextField
