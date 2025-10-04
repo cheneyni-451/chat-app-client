@@ -20,7 +20,12 @@ export default function Chat({ room }: { room: Room }) {
   socket.on(
     "chat message",
     (message: MessageDetail, ack: (response: boolean) => void) => {
-      setMessages([...messages, message]);
+      if (
+        messages.length > 0 &&
+        messages[messages.length - 1].id !== message.id
+      ) {
+        setMessages([...messages, message]);
+      }
       if (ack) {
         ack(true);
       }
