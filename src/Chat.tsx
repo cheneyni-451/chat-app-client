@@ -1,5 +1,5 @@
 import "./styles/Chat.css";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import type { Room } from "./models/roomModels";
 import type { MessageDetail } from "./models/messageModels";
 import {
@@ -9,25 +9,23 @@ import {
 } from "./apis/roomApis";
 import { useAuth } from "./auth/useAuth";
 import { socket } from "./main";
-import { Grid, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
+import MessageList from "./MessageList";
 
 export default function Chat({ room }: { room: Room }) {
   const auth = useAuth();
   const [messages, setMessages] = useState<MessageDetail[]>([]);
   const [messageInput, setMessageInput] = useState<string>("");
-  const bottomRef = useRef(null);
 
-  useEffect(() => {
-    socket.on(
-      "chat message",
-      (message: MessageDetail, ack: (response: boolean) => void) => {
-        setMessages([...messages, message]);
-        if (ack) {
-          ack(true);
-        }
+  socket.on(
+    "chat message",
+    (message: MessageDetail, ack: (response: boolean) => void) => {
+      setMessages([...messages, message]);
+      if (ack) {
+        ack(true);
       }
-    );
-  }, []);
+    }
+  );
 
   useEffect(() => {
     getMessagesForRoom(auth.getToken()!, room.id)
@@ -35,14 +33,11 @@ export default function Chat({ room }: { room: Room }) {
       .catch(console.error);
   }, [room]);
 
-  useEffect(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
-  }, [messages]);
-
   function handleSendMessage(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!messageInput) {
+      return;
+    }
     const messagePayload: MessageInput = {
       roomId: room.id,
       userId: auth.user!.id,
@@ -60,32 +55,7 @@ export default function Chat({ room }: { room: Room }) {
 
   return (
     <Stack spacing={1} sx={{ height: "100%" }}>
-      <Grid
-        container
-        direction="column"
-        wrap="nowrap"
-        sx={{ overflowY: "scroll", height: "100%" }}
-      >
-        {messages.map((msg) => {
-          const isUserMessage = msg.user.id === auth.user?.id;
-          return (
-            <Grid
-              alignSelf={isUserMessage ? "flex-end" : "flex-start"}
-              className={"message"}
-              sx={{
-                color: "#313244",
-                border: "none",
-                backgroundColor: isUserMessage ? "#89b4fa" : "#b4befe",
-                marginY: isUserMessage ? "0" : "0.2rem",
-              }}
-              key={msg.id}
-            >
-              {msg.content}
-            </Grid>
-          );
-        })}
-        <div ref={bottomRef} />
-      </Grid>
+      <MessageList messages={messages} />
       <form className="message-form" onSubmit={(e) => handleSendMessage(e)}>
         <TextField
           multiline
@@ -93,7 +63,9 @@ export default function Chat({ room }: { room: Room }) {
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
         />
-        <button type="submit">Send</button>
+        <Button type="submit" variant="contained" color="primary">
+          Send
+        </Button>
       </form>
     </Stack>
   );

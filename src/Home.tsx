@@ -26,12 +26,12 @@ export default function Home() {
   }
 
   return (
-    <Grid container sx={{ maxHeight: "100%", height: "100%" }}>
+    <Grid container sx={{ maxHeight: "100%", height: "100%" }} spacing={2}>
       <Grid size={2} justifyContent={"start"} sx={{ height: "100%" }}>
         <RoomList rooms={rooms} selectRoom={handleSelectRoom} />
       </Grid>
       <Grid size={10} sx={{ height: "100%" }}>
-        {selectedRoom && <Chat room={selectedRoom} />}
+        {selectedRoom && <Chat room={selectedRoom} key={selectedRoom.id} />}
       </Grid>
     </Grid>
   );
