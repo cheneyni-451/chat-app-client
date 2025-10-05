@@ -5,9 +5,10 @@ import App from "./App.tsx";
 import { AuthProvider } from "./auth/authContext.tsx";
 import { io } from "socket.io-client";
 
-export const socket = io("ws://localhost:3000", {
+export const socket = io(import.meta.env.VITE_SOCKET_IO_URL, {
   ackTimeout: 10000,
   retries: 3,
+  path: import.meta.env.VITE_SOCKET_IO_PATH,
 });
 
 socket.on("connect", () => {
