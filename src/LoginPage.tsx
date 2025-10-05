@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { login } from "./apis/userApis";
 import { useAuth } from "./auth/useAuth";
-import { Button, Grid, Paper, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

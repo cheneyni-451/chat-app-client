@@ -1,6 +1,6 @@
 import "./styles/RoomList.css";
 import type { Room } from "./models/roomModels";
-import { Button, Grid, Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 type Props = {
   rooms: Room[];
