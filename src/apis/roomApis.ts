@@ -51,6 +51,7 @@ export async function createRoom(
     method: "POST",
     body: JSON.stringify({ name: roomName, ownerId }),
     headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${authToken}`,
     },
   });
