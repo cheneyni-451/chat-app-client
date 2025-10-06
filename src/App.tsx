@@ -1,29 +1,14 @@
-import "./styles/App.css";
-import { useAuth } from "./auth/useAuth";
-import Home from "./Home";
-import LoginPage from "./LoginPage";
 import { Container } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
+import { Outlet } from "react-router";
 
 function App() {
-  const auth = useAuth();
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Container
-        sx={{
-          height: "100%",
-          width: "100%",
-        }}
-      >
-        {auth.user ? <Home /> : <LoginPage />}
-      </Container>
-    </ThemeProvider>
+    <Container
+      maxWidth={false}
+      sx={{ height: "100vh", width: "100vw", padding: "2rem" }}
+    >
+      <Outlet />
+    </Container>
   );
 }
 

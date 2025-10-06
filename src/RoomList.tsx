@@ -1,4 +1,3 @@
-import "./styles/RoomList.css";
 import type { Room } from "./models/roomModels";
 import {
   Button,

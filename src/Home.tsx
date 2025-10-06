@@ -1,4 +1,3 @@
-import "./styles/Home.css";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "./auth/useAuth";
 import RoomList from "./RoomList";

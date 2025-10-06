@@ -1,4 +1,3 @@
-import "./styles/Chat.css";
 import { useEffect, useState, type FormEvent } from "react";
 import type { Room } from "./models/roomModels";
 import type { MessageDetail } from "./models/messageModels";
@@ -62,15 +61,20 @@ export default function Chat({ room }: { room: Room }) {
     <Stack spacing={1} sx={{ height: "100%" }}>
       <MessageList messages={messages} />
       <form className="message-form" onSubmit={(e) => handleSendMessage(e)}>
-        <TextField
-          multiline
-          variant="outlined"
-          value={messageInput}
-          onChange={(e) => setMessageInput(e.target.value)}
-        />
-        <Button type="submit" variant="contained" color="primary">
-          Send
-        </Button>
+        <Stack direction="row" spacing={1} justifyContent="center">
+          <TextField
+            multiline
+            variant="outlined"
+            value={messageInput}
+            onChange={(e) => setMessageInput(e.target.value)}
+            sx={{
+              width: "50%",
+            }}
+          />
+          <Button type="submit" variant="contained" color="primary">
+            Send
+          </Button>
+        </Stack>
       </form>
     </Stack>
   );
