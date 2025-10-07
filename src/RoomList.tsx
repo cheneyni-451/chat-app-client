@@ -16,14 +16,15 @@ type Props = {
 };
 
 const RoomButton = styled(ListItemButton)(({ theme }) => ({
-  border: "1px solid #cba6f7",
+  border: `1px solid ${theme.palette.secondary.main}`,
   borderRadius: "10px",
   margin: "4px 0",
   marginRight: "8px",
-
   "&.Mui-selected": {
-    backgroundColor: "#cba6f7",
-    color: "#1e1e2e",
+    backgroundColor: theme.palette.secondary.main,
+  },
+  "&.Mui-selected .MuiListItemText-primary": {
+    color: theme.palette.background.default,
   },
 }));
 

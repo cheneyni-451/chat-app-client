@@ -25,3 +25,29 @@ export async function login(
   }
   return null;
 }
+
+export async function signup(
+  username: string,
+  email: string,
+  password: string
+): Promise<Omit<User, "token"> | null> {
+  const body = {
+    name: username,
+    email,
+    password,
+  };
+
+  const response = await fetch(`${USER_API_ENDPOINT}/new`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.ok) {
+    return await response.json();
+  }
+
+  return null;
+}
