@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { login } from "./apis/userApis";
 import { useAuth } from "./auth/useAuth";
-import { Button, Paper, Stack, TextField } from "@mui/material";
-import { Link, useNavigate } from "react-router";
+import { Button, Link, Paper, Stack, TextField } from "@mui/material";
+import { Link as RouterLink, useNavigate } from "react-router";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -54,7 +54,9 @@ export default function LoginForm() {
           >
             Log In
           </Button>
-          <Link to="/signup">Sign Up</Link>
+          <Link component={RouterLink} to="/signup" color="primary">
+            Create Account
+          </Link>
         </Stack>
       </form>
     </Paper>
