@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { login } from "./apis/userApis";
-import { useAuth } from "./auth/useAuth";
+import { useAuth } from "./hooks/useAuth";
 import { Button, Link, Paper, Stack, TextField } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router";
 

@@ -1,21 +1,30 @@
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, use, useEffect, useState, type ReactNode } from "react";
 import type { User } from "../models/userModels";
+import { useLocalStorage } from "./useLocalStorage";
 
 type UserDetails = Omit<User, "token">;
 
-interface IAuthContext {
+interface AuthContextProps {
   user: UserDetails | null;
   login: (data: User) => void;
   logout: () => void;
   getToken: () => string | null;
 }
 
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserDetails | null>(null);
-  const [token, setToken] = useState(localStorage.getItem("token") ?? "");
+  const [token, setToken] = useLocalStorage("token", "");
+
+  useEffect(() => {
+    if (token && !user) {
+      loginWithToken(token).catch(console.error);
+    }
+  }, [user, token]);
 
   function getToken() {
-    return localStorage.getItem("token");
+    return token;
   }
 
   async function loginWithToken(token: string) {
@@ -40,16 +49,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     login({ ...userDetails, token });
   }
 
-  useEffect(() => {
-    if (token && !user) {
-      loginWithToken(token).catch(console.error);
-    }
-  }, []);
-
   function login(data: User) {
-    setUser({ id: data.id, name: data.name, email: data.email });
+    const user: UserDetails = {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+    };
+    setUser(user);
     setToken(data.token);
-    localStorage.setItem("token", data.token);
   }
 
   function logout() {
@@ -65,4 +72,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export const AuthContext = createContext<IAuthContext | undefined>(undefined);
+export function useAuth() {
+  const ctx = use(AuthContext);
+
+  if (!ctx) {
+    throw new Error("useAuth must be used within a AuthProvider");
+  }
+
+  return ctx;
+}

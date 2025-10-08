@@ -2,7 +2,7 @@ import "./styles/style.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
-import { AuthProvider } from "./auth/authContext.tsx";
+import { AuthProvider } from "./hooks/useAuth.tsx";
 import { io } from "socket.io-client";
 import { BrowserRouter, Route, Routes } from "react-router";
 import LoginForm from "./LoginForm.tsx";
@@ -84,14 +84,9 @@ createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />}>
-              <Route
-                index
-                element={
-                  <RequireAuth>
-                    <Home />
-                  </RequireAuth>
-                }
-              />
+              <Route element={<RequireAuth />}>
+                <Route index element={<Home />} />
+              </Route>
               <Route element={<AuthLayout />}>
                 <Route path="signup" element={<SignUpForm />} />
                 <Route path="login" element={<LoginForm />} />

@@ -1,12 +1,8 @@
-import { type ReactElement } from "react";
-import { Navigate } from "react-router";
-import { useAuth } from "./auth/useAuth";
+import { Navigate, Outlet } from "react-router";
+import { useAuth } from "./hooks/useAuth";
 
-export default function RequireAuth({ children }: { children: ReactElement }) {
+export default function RequireAuth() {
   const auth = useAuth();
 
-  if (!auth.user) {
-    return <Navigate to="/login" />;
-  }
-  return children;
+  return auth.getToken() ? <Outlet /> : <Navigate to="/login" />;
 }

@@ -6,10 +6,10 @@ import {
   getMessagesForRoom,
   type MessageInput,
 } from "./apis/roomApis";
-import { useAuth } from "./auth/useAuth";
 import { socket } from "./main";
 import { Button, Stack, TextField } from "@mui/material";
 import MessageList from "./MessageList";
+import { useAuth } from "./hooks/useAuth";
 
 export default function Chat({ room }: { room: Room }) {
   const auth = useAuth();

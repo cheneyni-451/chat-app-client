@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useAuth } from "./auth/useAuth";
+import { useAuth } from "./hooks/useAuth";
 import RoomList from "./RoomList";
 import type { Room } from "./models/roomModels";
 import { createRoom, getRooms } from "./apis/roomApis";
