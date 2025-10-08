@@ -1,19 +1,21 @@
-import { styled } from "@mui/material/styles";
 import type { MessageDetail } from "./models/messageModels";
-import { Grid } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 
-const StyledMessage = styled(Grid)`
-  color: #313244;
-  border: none;
-  background-color: #b4befe;
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
-`;
+const StyledMessage = styled(Typography)(({ theme }) => ({
+  color: theme.palette.secondary.contrastText,
+  backgroundColor: theme.palette.secondary.main,
+  lineHeight: "1rem",
 
-const UserStyledMessage = styled(StyledMessage)`
-  background-color: #89b4fa;
-  margin: 0;
-`;
+  padding: "8px",
+  border: 0,
+  borderRadius: "10px",
+  marginTop: "0.1rem",
+  marginBottom: "0.1rem",
+}));
+
+const UserStyledMessage = styled(StyledMessage)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+}));
 
 export default function ChatMessage({
   message,
@@ -22,11 +24,18 @@ export default function ChatMessage({
   message: MessageDetail;
   isUserMessage: boolean;
 }) {
-  return isUserMessage ? (
-    <UserStyledMessage alignSelf="flex-end">
-      {message.content}
-    </UserStyledMessage>
-  ) : (
-    <StyledMessage alignSelf="flex-start">{message.content}</StyledMessage>
+  const username = message.user.name;
+
+  return (
+    <>
+      <Typography variant="caption" sx={{ marginTop: "10px", lineHeight: 1 }}>
+        {username}
+      </Typography>
+      {isUserMessage ? (
+        <UserStyledMessage>{message.content}</UserStyledMessage>
+      ) : (
+        <StyledMessage>{message.content}</StyledMessage>
+      )}
+    </>
   );
 }

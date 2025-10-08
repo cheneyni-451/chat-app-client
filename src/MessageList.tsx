@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { MessageDetail } from "./models/messageModels";
 import { Stack } from "@mui/material";
-import { useAuth } from "./auth/useAuth";
+import { useAuth } from "./hooks/useAuth";
 import ChatMessage from "./ChatMessage";
 
 export default function MessageList({
@@ -21,11 +21,11 @@ export default function MessageList({
   return (
     <Stack
       alignSelf="center"
+      alignItems="flex-start"
       sx={{
         overflowY: "scroll",
         height: "100%",
-        width: "80%",
-        minWidth: "500px",
+        width: "90%",
         paddingRight: "0.5rem",
       }}
     >
