@@ -1,7 +1,7 @@
-import { Button, Paper, Stack, TextField } from "@mui/material";
+import { Button, Link, Paper, Stack, TextField } from "@mui/material";
 import { useState, type FormEvent } from "react";
 import { signup } from "./apis/userApis";
-import { useNavigate } from "react-router";
+import { useNavigate, Link as RouterLink } from "react-router";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
@@ -58,6 +58,17 @@ export default function SignUpForm() {
           >
             Create Account
           </Button>
+          <div>
+            <Link
+              component={RouterLink}
+              to="/login"
+              color="primary"
+              underline="hover"
+              variant="subtitle1"
+            >
+              Already have an account
+            </Link>
+          </div>
         </Stack>
       </form>
     </Paper>

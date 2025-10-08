@@ -54,9 +54,18 @@ export default function LoginForm() {
           >
             Log In
           </Button>
-          <Link component={RouterLink} to="/signup" color="primary">
-            Create Account
-          </Link>
+          {/* surround Link with div to make link only take up length of text instead of entire width of parent */}
+          <div>
+            <Link
+              component={RouterLink}
+              to="/signup"
+              color="primary"
+              underline="hover"
+              variant="subtitle1"
+            >
+              Create an account
+            </Link>
+          </div>
         </Stack>
       </form>
     </Paper>
