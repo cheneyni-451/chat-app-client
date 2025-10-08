@@ -10,7 +10,7 @@ import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import Home from "./Home.tsx";
 import SignUpForm from "./SignUpForm.tsx";
-import { catppuccinPalettes } from "./colors.ts";
+import { catppuccinPalettes } from "./styles/colors.ts";
 import AuthLayout from "./AuthLayout.tsx";
 import RequireAuth from "./RequireAuth.tsx";
 
