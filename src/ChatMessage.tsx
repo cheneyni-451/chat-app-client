@@ -24,18 +24,9 @@ export default function ChatMessage({
   message: MessageDetail;
   isUserMessage: boolean;
 }) {
-  const username = message.user.name;
-
-  return (
-    <>
-      <Typography variant="caption" sx={{ marginTop: "10px", lineHeight: 1 }}>
-        {username}
-      </Typography>
-      {isUserMessage ? (
-        <UserStyledMessage>{message.content}</UserStyledMessage>
-      ) : (
-        <StyledMessage>{message.content}</StyledMessage>
-      )}
-    </>
+  return isUserMessage ? (
+    <UserStyledMessage>{message.content}</UserStyledMessage>
+  ) : (
+    <StyledMessage>{message.content}</StyledMessage>
   );
 }
