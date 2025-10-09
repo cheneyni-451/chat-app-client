@@ -5,6 +5,7 @@ const StyledMessage = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary.contrastText,
   backgroundColor: theme.palette.secondary.main,
   lineHeight: "1rem",
+  whiteSpace: "pre-line",
 
   padding: "8px",
   border: 0,
