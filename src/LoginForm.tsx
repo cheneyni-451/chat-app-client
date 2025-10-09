@@ -7,6 +7,7 @@ import { Link as RouterLink, useNavigate } from "react-router";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [formError, setFormError] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -24,6 +25,7 @@ export default function LoginForm() {
 
       navigate("/");
     } catch (e) {
+      setFormError(true);
       console.error(e);
     }
   }
@@ -36,6 +38,7 @@ export default function LoginForm() {
             type="email"
             label="email"
             variant="outlined"
+            error={formError}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -43,6 +46,7 @@ export default function LoginForm() {
             type="password"
             label="password"
             variant="outlined"
+            error={formError}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

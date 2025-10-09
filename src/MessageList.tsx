@@ -58,10 +58,6 @@ export default function MessageList({
   }, [messages]);
 
   useEffect(() => {
-    console.log(groupedMessages);
-  }, [groupedMessages]);
-
-  useEffect(() => {
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
     }

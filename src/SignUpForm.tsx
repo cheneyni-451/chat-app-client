@@ -7,6 +7,7 @@ export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [formError, setFormError] = useState(false);
   const navigate = useNavigate();
 
   async function handleSignUpFormSubmit(e: FormEvent) {
@@ -21,6 +22,7 @@ export default function SignUpForm() {
       }
       navigate("/login");
     } catch (e) {
+      setFormError(true);
       console.error(e);
     }
   }
@@ -33,6 +35,7 @@ export default function SignUpForm() {
             type="text"
             label="username"
             variant="outlined"
+            error={formError}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -40,6 +43,7 @@ export default function SignUpForm() {
             type="email"
             label="email"
             variant="outlined"
+            error={formError}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -47,6 +51,7 @@ export default function SignUpForm() {
             type="password"
             label="password"
             variant="outlined"
+            error={formError}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
